@@ -11,13 +11,26 @@
     (split-string (buffer-string) "\n" t)))
 
 (defun parse-input (input)
+  "`INPUT'."
   (let ((rules (butlast input))
         (sentence (car (last input))))
     (list (mapcar 'parse-rule rules)
           sentence)))
 
 (defun parse-rule (rule)
+  "`RULE'."
   (s-split " *=> *" rule))
+
+;; (defun apply-rule (sentence rule)
+;;   "`SENTENCE', `RULE'."
+;;   (cl-destructuring-bind (before after) rule
+;;     (s-matched-positions-all before sentence)
+;;     (replace-at-indices)))
+
+(defun replace-at-indices (string start end replacement)
+  (let ((begin (substring string 0 start))
+        (end (substring string end)))
+    (s-concat begin replacement end)))
 
 ;;; feb2020.el ends here
 (provide 'feb2020)
