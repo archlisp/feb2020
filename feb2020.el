@@ -4,7 +4,20 @@
 ;;; Commentary:
 ;;; Code:
 
+(defun read-lines (file-path)
+  "Return a list of lines of a file at `FILE-PATH'."
+  (with-temp-buffer
+    (insert-file-contents file-path)
+    (split-string (buffer-string) "\n" t)))
 
+(defun parse-input (input)
+  (let ((rules (butlast input))
+        (sentence (car (last input))))
+    (list (mapcar 'parse-rule rules)
+          sentence)))
+
+(defun parse-rule (rule)
+  (s-split " *=> *" rule))
 
 ;;; feb2020.el ends here
 (provide 'feb2020)
